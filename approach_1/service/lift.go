@@ -16,11 +16,10 @@ type Lift struct {
 
 // NewLift creates a new instance of Lift.
 func NewApproachLift1() *Lift {
-	liftFloorSet := NewIntOrderedSet()
 	return &Lift{
 		currentFloor: 0, // Default value being ground floor
 		direction:    -1,
-		liftFloorSet: liftFloorSet, // Explicitly initialize the queue
+		liftFloorSet: NewIntOrderedSet(), // Explicitly initialize the queue
 	}
 }
 
@@ -99,8 +98,6 @@ func (l *Lift) StartLift() {
 				continue
 			}
 
-			fmt.Printf("Next Floor : %v\n", nextFloor)
-
 			if nextFloor > l.currentFloor {
 				l.direction = 1
 			} else if nextFloor < l.currentFloor {
@@ -108,7 +105,6 @@ func (l *Lift) StartLift() {
 			}
 
 			if nextFloor == l.currentFloor {
-				fmt.Printf("Hiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii : \n")
 				l.removeRequest(l.currentFloor)
 				time.Sleep(3 * time.Second) // Wait for 2 seconds at the floor
 			} else {
