@@ -1,31 +1,30 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
-	"time"
 
-	handlers "github.com/MEHUL25/lift-management-system/handlers"
-	"github.com/MEHUL25/lift-management-system/logic"
+	handlers "github.com/MEHUL25/lift-management-system/approach_1/handlers"
+	"github.com/MEHUL25/lift-management-system/approach_1/service"
 	"github.com/go-chi/chi"
 )
 
 func main() {
 	r := chi.NewRouter()
 
+	// Approach_1
+
 	// Create an instance of the lift logic
-	liftLogic := logic.NewLiftLogic()
+	l1 := service.NewApproachLift1()
 
 	// Define routes
-	r.Post("/api/lift", handlers.HandleLiftRequest(liftLogic))
+	r.Post("/api/reachFloor", handlers.HandleRequestFromLift(l1))
+	r.Post("/api/callLift", handlers.HandleLiftCallRequest(l1))
 
-	// Start a Goroutine to continuously log the current floor
-	go func() {
-		for {
-			fmt.Printf("\n-------------------------\nCurrent floor: %d\nCurrent Direction: %d\n-------------------------\n", liftLogic.GetCurrentFloor(), liftLogic.GetCurrentDirection())
-			time.Sleep(time.Second) // Log every second
-		}
-	}()
+	// Start the lift processing
+	l1.StartLift()
 
-	http.ListenAndServe(":8080", r)
+	// Display current floor
+	l1.DisplayCurrentFloor()
+
+	http.ListenAndServe(":8000", r)
 }
