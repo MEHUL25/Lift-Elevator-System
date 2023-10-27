@@ -1,0 +1,26 @@
+update the lift system to support multiple Lifts like lets say 4 Lifts are available each running on different threads. 
+different lift is allocated to each request based on nearest and feasible resources. The nearest lift is assigned to each request. 
+The request's response would be the lift number assigned to request. here requests assigned are mainly the outside requests, 
+as internal requests would be alloted to the same lift. Continuously display each lift's state .
+
+
+
+
+Create a Lift Manager:
+
+This will manage all the Lifts.
+It will determine which lift should serve a request based on proximity and direction.
+Update the Lift System:
+
+Each lift will now also have an identifier (LiftID).
+The display function will now also show the LiftID along with its current status.
+Update the Handlers:
+
+The response will now also include the LiftID that has been assigned to serve the request.
+
+
+
+
+
+
+
